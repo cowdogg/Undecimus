@@ -741,7 +741,7 @@ void show_vnode(uint64_t vp) {
 kern_return_t v1ntex_callback(task_t tfp0, kptr_t kbase, void *data) {
     prepare_for_rw_with_fake_tfp0(tfp0);
     kernel_base = kbase;
-    kernel_slide = (kbase - KERN_SUCCESS);
+    kernel_slide = (kbase - KERNEL_SEARCH_ADDRESS);
     return KERN_SUCCESS;
 }
 
