@@ -739,9 +739,10 @@ void show_vnode(uint64_t vp) {
 }
 
 kern_return_t v1ntex_callback(task_t kernel_task, kptr_t kbase, void *data) {
-    if (MACH_PORT_VALID((tfp0 = kernel_task)) &&
+    prepare_for_rw_with_fake_tfp0(kernel_task);
+    if (MACH_PORT_VALID(tfp0) &&
         ISADDR((kernel_base = kbase)) &&
-        ISADDR((kernel_slide = (kbase - KERNEL_SEARCH_ADDRESS)))) {
+        ISADDR((kernel_slide = (kernel_base - KERNEL_SEARCH_ADDRESS)))) {
         return KERN_SUCCESS;
     } else {
         return KERN_FAILURE;
@@ -881,8 +882,10 @@ void jailbreak()
                     v1ntex_offsets *v1ntex_offs = NULL;
                     v1ntex_offs = get_v1ntex_offsets(kernelCachePath);
                     _assert(v1ntex_offs != NULL, message, true);
-                    exploit_success = (v1ntex(v1ntex_callback, NULL, v1ntex_offs) == ERR_SUCCESS);
                     offsets_init();
+                    if (v1ntex(v1ntex_callback, NULL, v1ntex_offs) == ERR_SUCCESS) {
+                        exploit_success = true;
+                    }
                     break;
                 }
                 default: {
