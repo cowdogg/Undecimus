@@ -738,11 +738,14 @@ void show_vnode(uint64_t vp) {
     printf("\n");
 }
 
-kern_return_t v1ntex_callback(task_t tfp0, kptr_t kbase, void *data) {
-    prepare_for_rw_with_fake_tfp0(tfp0);
-    kernel_base = kbase;
-    kernel_slide = (kbase - KERNEL_SEARCH_ADDRESS);
-    return KERN_SUCCESS;
+kern_return_t v1ntex_callback(task_t kernel_task, kptr_t kbase, void *data) {
+    if (MACH_PORT_VALID((tfp0 = kernel_task)) &&
+        ISADDR((kernel_base = kbase)) &&
+        ISADDR((kernel_slide = (kbase - KERNEL_SEARCH_ADDRESS)))) {
+        return KERN_SUCCESS;
+    } else {
+        return KERN_FAILURE;
+    }
 }
 
 void jailbreak()
