@@ -11,7 +11,7 @@
 
 static v1ntex_offsets v1ntex_offs;
 
-extern "C" v1ntex_offsets* get_v1ntex_offsets(const char *filename)
+extern "C" v1ntex_offsets* get_v1ntex_offsets(const char* filename)
 {
     LOG("Initializing offsetfinder64...");
     tihmstar::offsetfinder64 fi(filename);
@@ -35,10 +35,10 @@ extern "C" v1ntex_offsets* get_v1ntex_offsets(const char *filename)
         v1ntex_offs.offset_OSSerializer_serialize = (kptr_t)fi.find_osserializer_serialize();
         LOG("Successfully found offsets for v1ntex with offsetfinder64.");
         return &v1ntex_offs;
-    } catch (tihmstar::exception &e) {
+    } catch (tihmstar::exception& e) {
         LOG("Failed to find offsets for v1ntex with offsetfinder64 with a non-fatal error. %d (%s).", e.code(), e.what());
         return NULL;
-    } catch (std::exception &e) {
+    } catch (std::exception& e) {
         LOG("Failed to find offsets for v1ntex with offsetfinder64 with a fatal error. %s.", e.what());
         return NULL;
     }

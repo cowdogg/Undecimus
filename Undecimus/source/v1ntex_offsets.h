@@ -9,10 +9,10 @@
 #ifndef v1ntex_offsets_h
 #define v1ntex_offsets_h
 
-#include <stdint.h>
 #include <common.h>
+#include <stdint.h>
 
-typedef struct{
+typedef struct {
     kptr_t offset_zone_map;
     kptr_t offset_kernel_map;
     kptr_t offset_kernel_task;
@@ -33,6 +33,7 @@ typedef struct{
 #ifdef __cplusplus
 extern "C"
 #endif
-v1ntex_offsets* get_v1ntex_offsets(const char *filename);
+    v1ntex_offsets*
+    get_v1ntex_offsets(const char* filename);
 
 #endif /* v1ntex_offsets_h */
