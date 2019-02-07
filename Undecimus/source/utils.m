@@ -926,7 +926,8 @@ bool jailbreakSupported() {
     return supportsExploit(empty_list_exploit) ||
     supportsExploit(multi_path_exploit) ||
     supportsExploit(async_wake_exploit) ||
-    supportsExploit(voucher_swap_exploit);
+    supportsExploit(voucher_swap_exploit) ||
+    supportsExploit(v1ntex_exploit);
 }
 
 bool respringSupported() {
